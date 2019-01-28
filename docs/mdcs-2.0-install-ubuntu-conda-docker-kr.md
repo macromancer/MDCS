@@ -46,7 +46,7 @@ $ sudo apt-get install git
 ### 프로젝트 clone
 ```
 $ cd ~/Projects
-$ git clone https://github.com/usnistgov/MDCS.git
+$ git clone https://github.com/macromancer/MDCS.git
 $ cd MDCS
 ```
 
@@ -196,17 +196,17 @@ roles: ["readWrite"]
 ### MDCS setting.py 수정
 ```
 $ cd ~/Projects/MDCS
-$ vi mgi/settings.py
+$ vi mdcs/settings.py
 ...
 # Replace by your own values
 MONGO_MGI_USER = "mgi_user"
 MONGO_MGI_PASSWORD = "일반암호"
 ...
-# MDCS_URI = 'http://127.0.0.1:8000'
-MDCS_URI = 'http://leehsong.ddns.net:8000'
+# SERVER_URI = 'http://127.0.0.1:8000'
+SERVER_URI = 'http://<ip 또는 domain>:8000'
 ...
 #HOST = '127.0.0.1'
-HOST = 'leehsong.ddns.net'
+#HOST = '<ip 또는 domain>'
 ```
 
 ## Redis 설치
