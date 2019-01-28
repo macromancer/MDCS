@@ -62,7 +62,7 @@ $ cd MDCS
   ```
 * 로그아웃 후 다시 로그인
 
-## HDD mount
+## 참고: HDD mount
 * 참고: https://m.blog.naver.com/kimmingul/220639741333
 * 참고: https://www.phychode.com/sprt/blog/sprtBlogPost.pem?blogSeq=332
 ### HDD 연결 확인
