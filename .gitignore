@@ -237,3 +237,8 @@ radon.xml
 
 #virtual env
 venv/
+
+secrets.json
+
+src/
+static.prod/

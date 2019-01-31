@@ -1,3 +1,5 @@
+#-*- coding: utf-8 -*-
+
 """
 Django settings for mdcs project.
 
@@ -12,16 +14,34 @@ import os
 from mongoengine.connection import connect
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+import os, json
+from django.core.exceptions import ImproperlyConfigured
+
+
+secret_file = os.path.join(BASE_DIR, 'secrets.json')
+
+with open(secret_file) as f:
+    secrets = json.loads(f.read())
+
+def get_secret(setting, secrets=secrets):
+    try:
+        return secrets[setting]
+    except KeyError:
+        error_msg = "Set the {} environment variable".format(setting)
+        raise ImproperlyConfigured(error_msg)
+
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '<secret_key>'
+SECRET_KEY = get_secret("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', get_secret("HOST")]
 
 MENU_SELECT_PARENTS = False
 
@@ -129,9 +149,10 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -205,10 +226,10 @@ LOGGING = {
     }
 }
 
-MONGO_USER = "mgi_user"
-MONGO_PASSWORD = "mgi_password"
-DB_NAME = "mgi"
-DB_SERVER = "localhost"
+MONGO_USER = get_secret("MONGO_USER")
+MONGO_PASSWORD = get_secret("MONGO_PASSWORD")
+DB_NAME = get_secret("DB_NAME")
+DB_SERVER = get_secret("DB_SERVER")
 MONGODB_URI = "mongodb://" + MONGO_USER + ":" + MONGO_PASSWORD + "@" + DB_SERVER + "/" + DB_NAME
 connect(DB_NAME, host=MONGODB_URI)
 
@@ -234,7 +255,10 @@ BROKER_TRANSPORT_OPTIONS = {
 CELERY_RESULT_BACKEND = REDIS_URL
 
 # core_website_app settings
-SERVER_URI = "http://localhost:8000"
+if get_secret("PORT") == '' or get_secret("PORT") == '80':
+    SERVER_URI = "http://%s" % get_secret("HOST")
+else:
+    SERVER_URI = "http://%s:%s" % (get_secret("HOST"), get_secret("PORT"))
 
 # Password Policy
 # Determines wether to use the password history.
