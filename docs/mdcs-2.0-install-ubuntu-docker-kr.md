@@ -133,6 +133,7 @@ $ cd ~/Projects/MDCS
 $ source activate curator
 (curator) $ pip install -e git://github.com/MongoEngine/django-mongoengine.git@v0.2.1#egg=django-mongoengine
 (curator) $ pip install --no-cache-dir -r requirements.txt
+(curator) $ pip install git+https://github.com/macromancer/core_module_excel_uploader_app.git@1.0.0-rc2.1
 (curator) $ pip install --no-cache-dir -r requirements.core.txt
 ```
 
